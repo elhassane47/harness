@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+
+  server:
+    build:
+      context: ./server
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: server
+    depends_on:
+      - database
+    environment:
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=harnessuser
+      - POSTGRES_PASSWORD=harnesspassword
+      - POSTGRES_DB=harness
+    ports:
+      - 8000:8000
+    volumes:
+    - ./server:/usr/src/app
+
+  database:
+    container_name: database
+    image: postgres:13.4-alpine
+    environment:
+      - POSTGRES_USER=harnessuser
+      - POSTGRES_PASSWORD=harnesspassword
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=harness
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  client:
+    build:
+      context: ./client
+    command: npm start
+    container_name: client
+    depends_on:
+      - server
+    ports:
+      - 3000:3000
+    stdin_open: true
+    volumes:
+      - ./client:/usr/src/app
+
+
+volumes:
+  database:
