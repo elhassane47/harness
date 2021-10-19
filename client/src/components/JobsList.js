@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from "react";
 import JobsDataService from '../services/jobs';
+import SkillsDataService from '../services/skills';
 import AddJob from "./AddJob";
 import JobEditDelete from "./JobEditDelete";
 import JobDetail from "./JobDetail";
 
 const JobsList = () => {
   const [jobs, setJobs] = useState([]);
+  const [top_skills, setTopSkills] = useState([]);
   const [currentJob, setCurrentJob] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     retrieveJobs();
+    retrieveSkills();
   }, []);
 
     const refreshList = () => {
@@ -23,6 +25,16 @@ const JobsList = () => {
   const createJob = () => {
     setCurrentJob(null);
     setCurrentIndex(-1);
+  }
+
+  const retrieveSkills = () =>{
+    SkillsDataService.top_skills()
+      .then(response => {
+        setTopSkills(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   const retrieveJobs = () => {
@@ -55,6 +67,19 @@ const JobsList = () => {
                 key={index}
               >
                 {job.title}
+              </li>
+            ))}
+        </ul>
+
+        <h4>Top skills: </h4>
+        <ul className="list-group">
+          {top_skills &&
+            top_skills.map((skill, i) => (
+              <li
+                className="list-group-item"
+                key={i}
+              >
+                {skill.skills__name}({skill.count})
               </li>
             ))}
         </ul>

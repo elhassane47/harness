@@ -10,7 +10,7 @@ const JobEditDelete = props => {
   };
 
   const [currentJob, setCurrentJob] = useState(initialJobState);
-  const [skills, setSkills] = useState([{ name: "" }]);
+  const [skills, setSkills] = useState([ ]);
   const [message, setMessage] = useState("");
 
 
@@ -22,7 +22,7 @@ const JobEditDelete = props => {
     JobsDataService.get(id)
       .then(response => {
         setCurrentJob(response.data);
-        console.log(response.data);
+        setSkills(response.data.skills);
       })
       .catch(e => {
         console.log(e);
@@ -48,6 +48,7 @@ const JobEditDelete = props => {
   };
 
     const updateJob = () => {
+      currentJob['skills'] = skills ;
 
     JobsDataService.update(currentJob.id, currentJob)
       .then(response => {
@@ -58,7 +59,7 @@ const JobEditDelete = props => {
         console.log(e);
       });
   };
-
+  //todo refactor this
   const handleInputSkill = (e, index) => {
     const { name, value } = e.target;
     let sk = [...skills];

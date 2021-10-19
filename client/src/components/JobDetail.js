@@ -15,6 +15,19 @@ const JobDetail = props => {
               </label>{" "}
               {props.job.description}
             </div>
+             <div>
+              <label>
+                <strong>Skills:</strong>
+              </label>{" "}
+              <ul className="m-4" style={{display: 'inline-block'}}>
+              {props.job.skills.map((x, i) => (
+              <li>
+                  {x.name}
+              </li>
+            )
+            )}
+            </ul>
+            </div>
         </div>
     )
 };
