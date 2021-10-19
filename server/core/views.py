@@ -7,5 +7,5 @@ from .models import Job
 class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer
     queryset = Job.objects.all()
-    permission_classes = [IsOwnerOrReadOnly]
-    lookup_field = 'slug'
+    # permission_classes = [IsOwnerOrReadOnly]
+    # lookup_field = 'slug'

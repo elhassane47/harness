@@ -66,7 +66,7 @@ const JobsList = () => {
             <JobDetail job={currentJob} />
             <JobEditDelete
                 createJob={createJob}
-                slug={currentJob.slug}
+                id={currentJob.id}
                 refreshList={refreshList}
             />
           </div>

@@ -5,20 +5,20 @@ class JobsDataService {
     return http.get("/jobs");
   }
 
-  get(slug) {
-    return http.get(`/jobs/${slug}/`);
+  get(id) {
+    return http.get(`/jobs/${id}/`);
   }
 
   create(data) {
     return http.post("/jobs/", data);
   }
 
-  update(slug, data) {
-    return http.put(`/jobs/${slug}/`, data);
+  update(id, data) {
+    return http.put(`/jobs/${id}/`, data);
   }
 
-  delete(slug) {
-    return http.delete(`/jobs/${slug}`);
+  delete(id) {
+    return http.delete(`/jobs/${id}`);
   }
 
 }

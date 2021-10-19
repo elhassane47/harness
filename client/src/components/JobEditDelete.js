@@ -10,14 +10,16 @@ const JobEditDelete = props => {
   };
 
   const [currentJob, setCurrentJob] = useState(initialJobState);
+  const [skills, setSkills] = useState([{ name: "" }]);
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    getJob(props.slug);
-  }, [props.slug]);
 
-  const getJob = slug => {
-    JobsDataService.get(slug)
+  useEffect(() => {
+    getJob(props.id);
+  }, [props.id]);
+
+  const getJob = id => {
+    JobsDataService.get(id)
       .then(response => {
         setCurrentJob(response.data);
         console.log(response.data);
@@ -28,7 +30,7 @@ const JobEditDelete = props => {
   };
 
    const deleteJob = () => {
-    JobsDataService.delete(currentJob.slug)
+    JobsDataService.delete(currentJob.id)
       .then(response => {
         props.refreshList();
         console.log(response.data);
@@ -46,7 +48,8 @@ const JobEditDelete = props => {
   };
 
     const updateJob = () => {
-    JobsDataService.update(currentJob.slug, currentJob)
+
+    JobsDataService.update(currentJob.id, currentJob)
       .then(response => {
         setMessage("The Job offer was updated successfully!");
         props.refreshList();
@@ -56,11 +59,22 @@ const JobEditDelete = props => {
       });
   };
 
+  const handleInputSkill = (e, index) => {
+    const { name, value } = e.target;
+    let sk = [...skills];
+    sk[index]["name"] = value;
+    setSkills(sk);
+  };
+  const addSkill = event => {
+    event.preventDefault();
+    setSkills([...skills, { name: ""}]);
+  };
+
   return (
     <div>
       {currentJob ? (
          <div className="edit-form">
-          <form>
+          <form method="POST">
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
@@ -83,7 +97,26 @@ const JobEditDelete = props => {
                 onChange={handleInputChange}
               />
             </div>
-
+            <div className="m-3">
+              <label>Skills</label>
+            {skills.map((x, i) => (
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={x.name}
+                  onChange={e => handleInputSkill(e, i)}
+              />
+              </div>
+            )
+            )}
+          <button
+            className="btn"
+            onClick={addSkill}
+          >
+            Add Skill
+          </button>
+           </div>
           </form>
 
           <button className="btn btn-danger m-3" onClick={deleteJob}>
