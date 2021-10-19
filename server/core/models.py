@@ -17,12 +17,12 @@ CONTRACT_TYPE = (
 
 
 class Job(models.Model):
-    posted_by = models.ForeignKey(User, related_name='posted_by', on_delete=models.CASCADE)
+    posted_by = models.ForeignKey(User, related_name='posted_by', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
-    salary = models.DecimalField(max_digits=6, decimal_places=2, help_text="Annual Salary")
-    experience = models.IntegerField(default=0, choices=EXPERIENCE_CHOICE)
-    type = models.IntegerField(default=0, choices=CONTRACT_TYPE)
+    salary = models.DecimalField(max_digits=6, decimal_places=2, help_text="Annual Salary", null=True)
+    experience = models.IntegerField(default=0, choices=EXPERIENCE_CHOICE, null=True)
+    type = models.IntegerField(default=0, choices=CONTRACT_TYPE, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
