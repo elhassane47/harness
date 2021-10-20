@@ -2,7 +2,7 @@ import http from "../http-common";
 
 class JobsDataService {
   getAll() {
-    return http.get("/jobs");
+    return http.get("/jobs/");
   }
 
   get(id) {

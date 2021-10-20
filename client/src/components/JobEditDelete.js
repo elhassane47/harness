@@ -101,7 +101,7 @@ const JobEditDelete = props => {
             <div className="m-3">
               <label>Skills</label>
             {skills.map((x, i) => (
-              <div className="form-group">
+              <div className="form-group" key={i}>
                 <input
                   type="text"
                   className="form-control"
