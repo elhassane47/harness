@@ -24,7 +24,7 @@ class Skill(models.Model):
 
 
 class Job(models.Model):
-    posted_by = models.ForeignKey(User, related_name='posted_by', on_delete=models.CASCADE, null=True)
+    posted_by = models.ForeignKey(User, related_name='jobs', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     salary = models.DecimalField(max_digits=6, decimal_places=2, help_text="Annual Salary", null=True)
