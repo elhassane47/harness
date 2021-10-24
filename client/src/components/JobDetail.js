@@ -21,7 +21,7 @@ const JobDetail = props => {
               </label>{" "}
               <ul className="m-4" style={{display: 'inline-block'}}>
               {props.job.skills.map((x, i) => (
-              <li>
+              <li key={i}>
                   {x.name}
               </li>
             )
